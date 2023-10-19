@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import InputText from "../../components/InputText";
-import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
 import Modal from "../../components/Modal";
+import Header from "../../components/Header";
 
 export default function EmployeeData() {
   const [renderModal, setRenderModal] = useState(false);
@@ -11,16 +10,7 @@ export default function EmployeeData() {
     <>
       <Modal title="Folha de Pagamento" show={renderModal} close={setRenderModal}/>
       <section className="w-screen h-screen flex bg-blue-500 flex-col items-center gap-10 text-3xl">
-        <div className="w-full flex bg-blue-500 justify-between items-start p-1">
-          <Link
-            to="/"
-            className="w-[100px] h-10 flex justify-center items-center bg-blue-700 text-xl rounded-lg text-white"
-          >
-            Sair
-          </Link>
-          <img src={logo} alt="logo" width={300} />
-          <span />
-        </div>
+        <Header />
         <div className="w-[70%] h-fit flex flex-col justify-center items-center rounded-xl p-5 bg-gray-200">
           <h1 className="text-3xl font-semibold">Dados Do Funcionarios</h1>
           <article className="flex w-full h-fit p-10 gap-10 text-start">
