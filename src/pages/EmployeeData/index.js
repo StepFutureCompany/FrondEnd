@@ -8,25 +8,25 @@ export default function EmployeeData() {
   
   return (
     <>
-      <Modal title="Folha de Pagamento" show={renderModal} close={setRenderModal}/>
+      <Modal title="Folha de Pagamento" show={renderModal} close={setRenderModal} optionsProps/>
       <section className="w-screen h-screen flex bg-blue-500 flex-col items-center gap-10 text-3xl">
         <Header />
-        <div className="w-[70%] h-fit flex flex-col justify-center items-center rounded-xl p-5 bg-gray-200">
+        <div className="w-[70%] h-fit flex flex-col justify-center items-center rounded-xl p-5 bg-white">
           <h1 className="text-3xl font-semibold">Dados Do Funcionarios</h1>
           <article className="flex w-full h-fit p-10 gap-10 text-start">
             <aside className="w-full flex flex-col gap-2">
-              <InputText title="Nome" />
-              <InputText title="RA" />
-              <InputText title="RG" />
-              <InputText title="CPF" />
-              <InputText title="Data de Nascimento" />
+              <InputText title="Nome" disabled />
+              <InputText title="RA" disabled />
+              <InputText title="RG" disabled />
+              <InputText title="CPF" disabled />
+              <InputText title="Telefone" disabled />
             </aside>
             <aside className="w-full flex flex-col gap-2">
-              <InputText title="Salario Liquido" />
-              <InputText title="Salario Base" />
-              <InputText title="Carteira de Trabalho" />
-              <InputText title="INSS" />
-              <InputText title="Cargo" />
+              <InputText title="Salario" disabled />
+              <InputText title="Pagamento" disabled />
+              <InputText title="Vale" disabled />
+              <InputText title="Desconto" disabled />
+              <InputText title="Total" disabled />
             </aside>
           </article>
           <button

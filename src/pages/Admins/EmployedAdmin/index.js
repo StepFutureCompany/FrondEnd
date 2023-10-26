@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../../components/Header";
 import { TableAdmin } from "../../../mock/TableAdmin";
+import { Link } from "react-router-dom";
 
 export default function EmployeeAdmin() {
   return (
@@ -11,14 +12,14 @@ export default function EmployeeAdmin() {
           <th>RA</th>
           <th>Name</th>
           <th>Cargo</th>
-          <th>#</th>
+          <th></th>
         </thead>
         {TableAdmin.map((e, i) => (
           <tbody key="i" className="w-full flex justify-around p-2 border-b cursor-pointer border-black">
             <tr className="w-full flex justify-start">{e.ra}</tr>
             <tr className="w-full flex justify-start">{e.name}</tr>
             <tr className="w-full flex justify-start">{e.cargo}</tr>
-            <tr className="w-full flex justify-start">Editar</tr>
+            <Link to="/dados_do_funcionarios" className="w-full flex justify-center text-blue-700">Editar</Link>
           </tbody>
         ))}
       </table>
