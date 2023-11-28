@@ -5,9 +5,7 @@ const api_client = axios.create({
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    Accept: '/',
   },
 });
 
-export default api_client;
+export default api_client

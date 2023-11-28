@@ -5,46 +5,26 @@ import Modal from "../Modal";
 import api_client from "../../config/api_client";
 
 export default function DadosDoFuncionarios() {
+  const [form, setForm] = useState({});
   const [renderModal, setRenderModal] = useState(false);
-  const [stateBairro, setStateBairro] = useState('');
-  const [stateCargo, setStateCargo] = useState('');
-  const [stateCelular, setStateCelular] = useState('');
-  const [stateCep, setStateCep] = useState('');
-  const [stateCidade, setStateCidade] = useState('');
-  const [stateRua, setStateRua] = useState('');
-  const [stateNumeroCasa, setStateNumeroCasa] = useState('');
-  const [stateCpf, setStateCpf] = useState('');
-  const [stateRg, setStateRg] = useState('');
-  const [stateCtTrabalho, setStateCtTrabalho] = useState('');
-  const [statePis, setStatePis] = useState('');
-  const [stateNascimento, setStateNascimento] = useState('');
-  const [stateEmail, setStateEmail] = useState('');
-  const [stateSalarioLiquido, setStateSalarioLiquido] = useState('');
-  const [stateRa, setStateRa] = useState('');
 
-  function handleSubmit() {
-    api_client
-      .post("/funcionario", {
-        ra: stateRa,
-        cpf: stateCpf,
-        salarioLiquido: stateSalarioLiquido,
-        dtNascimento: stateNascimento,
-        rg: stateRg,
-        ctTrabalho: stateCtTrabalho,
-        cargo: stateCargo,
-        email: stateEmail,
-        pis: statePis,
-        rua: stateRua,
-        numero: stateNumeroCasa,
-        bairro: stateBairro,
-        cep: stateCep,
-        cidade: stateCidade,
-        celular: stateCelular,
-      })
-      .then((response) => {
-        console.log("Sucesso", response);
+  function handleTextChange(e) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    form.dt_nascimento = new Date(form.dt_nascimento);
+    await api_client
+    .post("/funcionario", form)
+    .then((response) => {
+      console.log("Sucesso", response);
+      alert('Funcionario cadastrado com sucesso')
+      e.target.reset();
       })
       .catch((e) => {
+        alert('Erro ao cadastrar funcionario')
         console.error(e);
       });
   }
@@ -59,59 +39,74 @@ export default function DadosDoFuncionarios() {
       />
       <section className="w-screen h-screen flex bg-blue-500 flex-col items-center text-3xl">
         <Header />
-        <div className="w-[70%] h-full flex flex-col gap-3 justify-center items-center rounded-xl p-5 bg-white m-5">
+        <form className="w-[70%] h-full flex flex-col gap-3 justify-center items-center rounded-xl p-5 bg-white m-5" onSubmit={handleSubmit} >
           <h1 className="text-2xl font-semibold">Dados Do Funcionarios</h1>
           <article className="flex w-full gap-10 text-start">
             <aside className="w-full flex flex-col gap-2">
               <InputText
-                title="RA"
-                value={stateRa}
-                onChange={(e) => setStateRa(e.target.value)}
+              required
+              onChange={handleTextChange}
+                title="Nome"
+                name="nome"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Data de nascimento"
-                value={stateNascimento}
-                onChange={(e) => setStateNascimento(e.target.value)}
+                name="dt_nascimento"
+                type="date"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Cargo"
-                value={stateCargo}
-                onChange={(e) => setStateCargo(e.target.value)}
+                name="cargo"
               />
             </aside>
             <aside className="w-full flex flex-col gap-2">
               <InputText
+              required
+              onChange={handleTextChange}
                 title="CPF"
-                value={stateCpf}
-                onChange={(e) => setStateCpf(e.target.value)}
+                name="cpf"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="RG"
-                value={stateRg}
-                onChange={(e) => setStateRg(e.target.value)}
+                name="rg"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Email"
-                value={stateEmail}
-                onChange={(e) => setStateEmail(e.target.value)}
+                name="email"
               />
             </aside>
             <aside className="w-full flex flex-col gap-2">
-              <InputText
+            <InputText
+              required
+              onChange={handleTextChange}
                 title="Salario Liquido"
-                value={stateSalarioLiquido}
-                onChange={(e) => setStateSalarioLiquido(e.target.value)}
+                name="sl_liquido"
               />
-
+            <InputText
+              required
+              onChange={handleTextChange}
+                title="Salario base"
+                name="sl_base"
+              />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Carteira de Trabalho"
-                value={stateCtTrabalho}
-                onChange={(e) => setStateCtTrabalho(e.target.value)}
+                name="ct_de_trabalho"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="PIS"
-                value={statePis}
-                onChange={(e) => setStatePis(e.target.value)}
+                name="pis"
               />
             </aside>
           </article>
@@ -119,46 +114,47 @@ export default function DadosDoFuncionarios() {
           <article className="flex w-full gap-10 text-start">
             <aside className="w-full flex flex-col gap-2">
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Rua"
-                value={stateRua}
-                onChange={(e) => setStateRua(e.target.value)}
+                name="endereço"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Bairro"
-                value={stateBairro}
-                onChange={(e) => setStateBairro(e.target.value)}
+                name="bairro"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Cidade"
-                value={stateCidade}
-                onChange={(e) => setStateCidade(e.target.value)}
+                name="cidade"
               />
             </aside>
             <aside className="w-full flex flex-col gap-2">
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Numero"
-                value={stateNumeroCasa}
-                onChange={(e) => setStateNumeroCasa(e.target.value)}
+                name="numero"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="CEP"
-                value={stateCep}
-                onChange={(e) => setStateCep(e.target.value)}
+                name="cep"
               />
               <InputText
+              required
+              onChange={handleTextChange}
                 title="Celular"
-                value={stateCelular}
-                onChange={(e) => setStateCelular(e.target.value)}
+                name="celular"
               />
             </aside>
           </article>
-          <button
-            className="text-lg w-[400px] h-10 rounded-xl bg-blue-500 text-white"
-            onClick={() => handleSubmit()}
-          >
-            Salvar
-          </button>
-        </div>
+          <input type="submit" className="text-lg w-[400px] h-10 rounded-xl bg-blue-500 text-white" value="Salvar" />
+        </form>
       </section>
     </>
   );

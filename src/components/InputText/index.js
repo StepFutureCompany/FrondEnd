@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function InputText({ title, readOnly, classInput, className, classTitle, placeholder = '', value, onChange, type = 'text', disabled }) {
+export default function InputText({ required, title, readOnly, classInput, className, classTitle, placeholder = '', value, onChange, type = 'text', disabled, name = ''}) {
 
   return (
     <div className={` ${classTitle} flex flex-col w-full`}>
@@ -16,6 +16,8 @@ export default function InputText({ title, readOnly, classInput, className, clas
           readOnly={readOnly}
           onChange={onChange}
           value={value}
+          required={required}
+          name={name}
         />
       </div>
     </div>
