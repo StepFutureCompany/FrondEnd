@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import InputText from "../InputText";
 import Modal from "../Modal";
 import api_client from "../../config/api_client";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function DadosDoFuncionarios() {
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [form, setForm] = useState({});
   const [renderModal, setRenderModal] = useState(false);
 
@@ -15,19 +18,46 @@ export default function DadosDoFuncionarios() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const isEdit = params.get("ra");
+    const url = isEdit ? `/funcionario/${params.get("ra")}` : "/funcionario";
+    const method = isEdit ? "put" : "post";
     form.dt_nascimento = new Date(form.dt_nascimento);
     await api_client
-    .post("/funcionario", form)
+    [method](url, form)
     .then((response) => {
       console.log("Sucesso", response);
-      alert('Funcionario cadastrado com sucesso')
-      e.target.reset();
+      alert(`Funcionario ${
+        isEdit ? "editado" : "cadastrado"
+      } com sucesso`)
+      !isEdit && e.target.reset();
+      navigate("/admin");
       })
       .catch((e) => {
         alert('Erro ao cadastrar funcionario')
         console.error(e);
       });
   }
+
+  useEffect(() => {
+    const ra = params.get("ra");
+    if (ra) {
+      (async () => {
+        const { data } = await api_client.get(`/funcionario/${ra}`);
+        setForm(data);
+        Object.keys(data).forEach((key) => {
+          const input = document.querySelector(`input[name=${key}]`);
+          if (input) {
+            input.value = data[key];
+          }
+        })
+      })();
+    }
+  }, [params]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) navigate("/");
+  } ,[])
 
   return (
     <>
